@@ -26,8 +26,17 @@ const getCaret = direction => {
         <FontAwesomeIcon icon='sort' />
     );
 };
+function pdfFormatter(cell,row) {
+    console.log(cell)
+   
+   
+    const fileName = "book.pdf";
 
+    
+    return(<a href={cell} download={fileName}>Link </a>)
+}
 function imageFormatter(cell, row) {
+    console.log(cell)
     return "<img src='" + cell + "'/>";
 }
 
@@ -73,13 +82,13 @@ export default class BooksList extends React.Component {
                     <TableHeaderColumn dataField="id" isKey hidden>Id</TableHeaderColumn>
 
                     <TableHeaderColumn
-                        dataField="id"
-                        dataSort={true}
-                        caretRender={getCaret}
-                        filter={{ type: 'TextFilter', delay: 0 }}
+                        dataField="pdf"
+                    
+                        
+                       dataFormat={pdfFormatter}
                         columnTitle
                     >
-                        ID
+                        PDF
                 </TableHeaderColumn>
 
                     <TableHeaderColumn
@@ -113,11 +122,11 @@ export default class BooksList extends React.Component {
                     </TableHeaderColumn>
 
                     <TableHeaderColumn dataField="photo"
-                        dataSort={true}
-                        caretRender={getCaret}
-                        filter={{ type: 'TextFilter', delay: 0 }}
+                        // dataSort={true}
+                        // caretRender={getCaret}
+                        // filter={{ type: 'TextFilter', delay: 0 }}
                         dataFormat={imageFormatter}>
-                        Photo
+                       Book Cover
                     </TableHeaderColumn>
 
                 </BootstrapTable>

@@ -140,11 +140,11 @@ export class BooksListContainer extends React.Component {
                             <div className="col-md-10">
                                 <form>
                                     <div className="form-group">
-                                        <label>ID</label>
+                                        <label>PDF link</label>
                                         <input
                                             className="form-control"
                                             placeholder="Input name"
-                                            value={this.state.selectedBook.id}
+                                            value={this.state.selectedBook.pdf}
                                             disabled="true"
                                         />
                                     </div>

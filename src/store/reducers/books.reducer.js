@@ -15,7 +15,7 @@ const booksReducer = (state = Initial_State, action) => {
             };
         }
         case BookActionTypes.GET_BOOK_RESPONSE: {
-            debugger;
+            // debugger;
             return {
                 ...state,
                 selectedBook: _.assign(action.book)

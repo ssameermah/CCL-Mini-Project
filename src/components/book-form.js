@@ -24,13 +24,23 @@ export class BookForm extends React.Component {
                 name: "",
                 description: "",
                 author: "",
-                photo: ""
+                photo: "",
+                pdf:""
             },
             creating: true,
             editing: false,
             viewing: false
         }
     }
+    getBase64(file) {
+        console.log(file)
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      }
 
     componentDidMount() {
         const bookId = this.props.history.location.pathname.split("/")[2];
@@ -72,7 +82,8 @@ export class BookForm extends React.Component {
                             name: this.state.book.name,
                             description: this.state.book.description,
                             author: this.state.book.author,
-                            photo: this.state.book.photo
+                            photo: this.state.book.photo,
+                            pdf:this.state.book.pdf
                         }
                     }
                 );
@@ -84,7 +95,8 @@ export class BookForm extends React.Component {
                         name: event.target.value,
                         description: this.state.book.description,
                         author: this.state.book.author,
-                        photo: this.state.book.photo
+                        photo: this.state.book.photo,
+                        pdf:this.state.book.pdf
                     }
                 }
                 );
@@ -96,7 +108,8 @@ export class BookForm extends React.Component {
                         name: this.state.book.name,
                         description: event.target.value,
                         author: this.state.book.author,
-                        photo: this.state.book.photo
+                        photo: this.state.book.photo,
+                        pdf:this.state.book.pdf
                     }
                 });
                 break;
@@ -108,7 +121,8 @@ export class BookForm extends React.Component {
                             name: this.state.book.name,
                             description: this.state.book.description,
                             author: event.target.value,
-                            photo: this.state.book.photo
+                            photo: this.state.book.photo,
+                            pdf:this.state.book.pdf
                         }
                     }
                 );
@@ -121,10 +135,31 @@ export class BookForm extends React.Component {
                             name: this.state.book.name,
                             description: this.state.book.description,
                             author: this.state.book.author,
-                            photo: event.target.value
+                            photo: event.target.value,
+                            pdf:this.state.book.pdf
                         }
                     }
                 );
+                break;
+            
+            case "pdf":
+          
+                this.getBase64(event.target.files[0]).then(data=>{
+                    this.setState(
+                        {
+                            book: {
+                                id: this.state.book.id,
+                                name: this.state.book.name,
+                                description: this.state.book.description,
+                                author: this.state.book.author,
+                                photo: this.state.book.photo,
+                                pdf:data
+                            }
+                        }
+                        );
+
+                })
+                
                 break;
         }
     }
@@ -137,6 +172,7 @@ export class BookForm extends React.Component {
             description: this.state.book.description,
             author: this.state.book.author,
             photo: this.state.book.photo,
+            pdf:this.state.book.pdf
         };
         this.props.action.saveBookAction(book)
             .then(() => {
@@ -178,6 +214,11 @@ export class BookForm extends React.Component {
                     <div class="form-group">
                         <label for="photo">Photo</label>
                         <input type="text" class="form-control" value={this.state.book.photo} onChange={this.handleChange} id="photo" placeholder="photo URL" aria-describedby="photoHelp" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photo">Pdf Link</label>
+                        <input type="file" class="form-control"  onChange={this.handleChange} id="pdf" placeholder="PDF URL" aria-describedby="pdfHelp" />
                     </div>
 
                     <div class="float-right">
