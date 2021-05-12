@@ -32,8 +32,10 @@ function pdfFormatter(cell,row) {
    
     const fileName = "book.pdf";
 
-    
-    return(<a href={cell} download={fileName}>Link </a>)
+    if(!cell){
+        return('Download not available')
+    }
+    return(<a href={cell} download={fileName}>Download Book </a>)
 }
 function imageFormatter(cell, row) {
     console.log(cell)
